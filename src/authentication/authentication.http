@@ -1,0 +1,19 @@
+@url = http://localhost:8080
+
+POST {{url}}/auth/register HTTP/1.1
+content-type: application/json
+
+{
+    "email": "toto.01@tutu.com",
+    "password": "1234",
+    "username": "Toto Tutu 01"
+}
+
+###
+POST {{url}}/auth/login HTTP/1.1
+content-type: application/json
+
+{
+    "email": "toto.01@tutu.com",
+    "password": "1234"
+}
