@@ -1,6 +1,5 @@
-import exoress from "express";
-
-import { login, register } from "../authentication/authentication_controller";
+import exoress from "express"
+import { login, register } from "./authenticationController"
 
 export default (router: exoress.Router) => {
     router.post('/auth/register', register)
