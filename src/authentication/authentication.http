@@ -17,3 +17,6 @@ content-type: application/json
     "email": "toto.01@tutu.com",
     "password": "1234"
 }
+
+###
+POST {{url}}/auth/logout HTTP/1.1

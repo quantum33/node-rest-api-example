@@ -1,6 +1,6 @@
 import express from "express";
 
-import { createUser, getUserByEmail } from "../db/users";
+import { createUser, getUserByEmail, getUserBySessionToken } from "../db/users";
 import { random, encryptPassword } from "./crypter";
 
 export const register = async (req: express.Request, res: express.Response) => {
@@ -61,6 +61,30 @@ export const login = async (req: express.Request, res: express.Response) => {
     });
 
     return res.status(200).json(user).end();
+  } catch (error) {
+    console.log(error);
+    res.send(500);
+  }
+}
+
+export const logout = async (req: express.Request, res: express.Response) => {
+  try {
+    var sessionToken = req.cookies["MY-COOKIE"]
+    if (!sessionToken) {
+      return res.status(200)
+    }
+
+    let user = await getUserBySessionToken(sessionToken)
+    if (!user) {
+      res.clearCookie("MY-COOKIE")
+      return res.sendStatus(200)
+    }
+
+    user.authentication.sessionToken = ""
+    await user.save();
+
+    res.clearCookie("MY-COOKIE")
+    return res.status(200)
   } catch (error) {
     console.log(error);
     res.send(500);
